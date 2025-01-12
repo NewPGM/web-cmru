@@ -1,12 +1,14 @@
 import axios from 'axios'
 
-require('dotenv').config(); 
+
 const apiClient = axios.create({
-  baseURL: 'https://api-cmru.vercel.app/api',
+  baseURL: process.env.VUE_APP_API_BASE_URL || 'http://localhost:4000/api',
   headers: {
     'Content-Type': 'application/json',
-  }
-})
+  },
+});
+
+export default apiClient;
 
 export const instructorAPI = {
   getAll() {
