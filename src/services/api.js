@@ -2,7 +2,7 @@ import axios from 'axios'
 
 require('dotenv').config(); 
 const apiClient = axios.create({
-  baseURL: process.env.API_BASE_URL,
+  baseURL: "https://api-cmru.vercel.app",
   headers: {
     'Content-Type': 'application/json',
   }
