@@ -7,6 +7,7 @@ const apiClient = axios.create({
     'Content-Type': 'application/json',
   }
 })
+console.log(process.env.API_BASE_URL);
 
 export const instructorAPI = {
   getAll() {
