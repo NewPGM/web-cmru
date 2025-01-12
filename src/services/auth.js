@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // สร้าง axios instance พร้อมกำหนดค่าเริ่มต้น
 const api = axios.create({
-  baseURL: process.env.API_BASE_URL, // แก้เป็น URL ของ backend ของคุณ
+  baseURL: "https://api-cmru.vercel.app", // แก้เป็น URL ของ backend ของคุณ
   headers: {
     'Content-Type': 'application/json'
   }
