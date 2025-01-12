@@ -14,7 +14,7 @@ export default api;
 export const authService = {
   async login(username, password) {
     try {
-      const response = await api.post('/api/login', {
+      const response = await api.post('/login', {
         username,
         password
       });
