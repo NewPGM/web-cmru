@@ -8,8 +8,8 @@ import './main.css'
 
 
 // เพิ่มไอคอนที่ต้องการลงใน library
-import { faUser, faHome, faSignOutAlt, faBuilding, faDoorOpen, faMap ,faLightbulb,faGraduationCap , faChalkboardTeacher ,faBook,faQuestionCircle,faEdit, faTrash} from '@fortawesome/free-solid-svg-icons'
-library.add(faUser, faHome, faSignOutAlt, faBuilding, faDoorOpen, faMap,faLightbulb ,faGraduationCap,faChalkboardTeacher,faBook,faQuestionCircle,faEdit,faTrash)
+import { faUser, faHome, faSignOutAlt, faBuilding, faDoorOpen, faMap ,faLightbulb,faGraduationCap , faChalkboardTeacher ,faBook,faQuestionCircle,faEdit, faTrash,faPlus} from '@fortawesome/free-solid-svg-icons'
+library.add(faUser, faHome, faSignOutAlt, faBuilding, faDoorOpen, faMap,faLightbulb ,faGraduationCap,faChalkboardTeacher,faBook,faQuestionCircle,faEdit,faTrash,faPlus)
 
 // สร้าง Vue instance
 const app = createApp(App)

@@ -5,9 +5,24 @@
       <!-- ส่วนอื่นๆ ของ HeaderBar -->
       
       
-        <div class="w-28 h-30">
+        <!-- <div class="w-28 h-30">
         <img src="@/assets/img/logo.jpg" class="w-full h-full">
-      </div>
+      </div> -->
+      <div class="flex items-center">
+      <div  class="lg:w-28 h-24 ">
+    <img src="@/assets/img/logo.jpg" class="w-full h-full" />
+  </div>
+  <button 
+        @click="toggleMenu" 
+        class="px-4 py-2  rounded-md   text-3xl"
+      >
+      ≡
+      </button>
+  <!-- ปุ่มเมนู -->
+</div>
+
+      <!-- เมนู -->
+      <MenuBar v-if="isMenuVisible" @close="closeMenu"  class="fixed top-28 left-0 w-70 bg-white shadow-md h-[calc(100vh-4rem)] sm:w-70"/>
         
         <!-- เพิ่มส่วนแสดงข้อมูล user -->
       <div class="flex items-center gap-4">
@@ -51,11 +66,17 @@
 </template>
 
 <script>
+import { useRoute, useRouter } from 'vue-router'
+import MenuBar from '@/components/MenuBar.vue'
 export default {
   name: 'HeaderBar',
+  components: {
+    MenuBar,
+  },
   data() {
     return {
       showConfirmation: false,
+      isMenuVisible: false,
       user: null
     }
   },
@@ -65,7 +86,26 @@ export default {
       this.user = JSON.parse(user);
     }
  },
+ setup() {
+    const route = useRoute() // เข้าถึงข้อมูลเส้นทางปัจจุบัน
+    const router = useRouter();
+
+    router.afterEach(() => {
+      if (window.innerWidth <= 768) {
+        this.isMenuVisible = false;
+      }
+    });
+    return {
+      route, // ส่งต่อ route ไปใช้งานใน template
+    }
+  },
   methods: {
+    toggleMenu() {
+      this.isMenuVisible = !this.isMenuVisible
+    },
+    closeMenu() {
+      this.isMenuVisible = false
+    },
     handleLogout() {
       this.showConfirmation = true
     },

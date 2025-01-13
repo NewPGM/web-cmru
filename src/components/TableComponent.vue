@@ -1,35 +1,68 @@
 <!-- src/components/TableComponent.vue -->
 <template>
-  <div>
+  <div class="relative">
+    <!-- Header -->
     <div class="flex justify-between">
-    <h2 class="text-2xl font-bold mt-4">{{ textHeader }}</h2>
-    <button @click="openAddDialog" class="add-button">เพิ่มข้อมูล</button>
-  </div>
-    <table>
-      <thead>
-        <tr class="h-color text-center">
-          <th v-for="header in headers" :key="header">{{ header }}</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(row, rowIndex) in displayedData" :key="rowIndex">
-          <td v-for="(cell, cellIndex) in row" :key="cellIndex">
-            {{ getDisplayName(headers[cellIndex], cell) }}
-          </td>
-          <td width="100px">
-            <div class="flex">
-            <button class="bg-[#228B22]" @click="openEditDialog(row, rowIndex)"><font-awesome-icon icon="edit" /></button>
-            <button class="bg-red-500" @click="deleteRow(rowIndex)"><font-awesome-icon icon="trash" /></button>
-          </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <h2 class=" font-bold mt-4 sm:text-[10px] lg:text-[25px]">{{ textHeader }}</h2>
+      <button
+        @click="openAddDialog"
+        class="add-button flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 "
+      >
+        <font-awesome-icon icon="plus" />
+        <span class="ml-2 ">เพิ่มข้อมูล</span>
+      </button>
+    </div>
+
+    <!-- Table Container -->
+    <div class="overflow-hidden border border-gray-300 rounded-md mt-4 relative">
+      <div class="max-h-96 overflow-y-auto">
+        <table class="w-full border-collapse">
+          <!-- Sticky Header -->
+          <thead class="bg-blue-600 text-white sticky top-0 z-10">
+            <tr>
+              <th v-for="header in headers" :key="header" class="px-4 py-2 text-left">
+                {{ header }}
+              </th>
+              <th class="px-4 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+
+          <!-- Table Body -->
+          <tbody>
+            <tr
+              v-for="(row, rowIndex) in displayedData"
+              :key="rowIndex"
+              class="border-b"
+            >
+              <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="px-4 py-2">
+                {{ getDisplayName(headers[cellIndex], cell) }}
+              </td>
+              <td class="px-4 py-2">
+                <div class="flex space-x-2">
+                  <button
+                    class="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600"
+                    @click="openEditDialog(row, rowIndex)"
+                  >
+                    <font-awesome-icon icon="edit" />
+                  </button>
+                  <button
+                    class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                    @click="deleteRow(rowIndex)"
+                  >
+                    <font-awesome-icon icon="trash" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Sticky Footer -->
   </div>
     <!-- Button to open Add Dialog -->
     
-
     <!-- Add Dialog -->
     <div v-if="showAddDialog" class="modal-overlay">
       <div class="modal-content">
@@ -274,11 +307,13 @@ export default {
 button {
   margin: 5px;
 }
-table {
+/* table {
   width: 100%;
+  height: 400px;
   border-collapse: collapse;
+  overflow-y: auto;
   margin-bottom: 1rem;
-}
+} */
 
 th, td {
   border: 1px solid #3260a5;

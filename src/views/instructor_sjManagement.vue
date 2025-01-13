@@ -1,12 +1,12 @@
 <template>
   <div class="flex-1 p-6">
-    <div class="text-2xl font-bold text-center mb-6 bg-white p-4 mb-4 border border-gray-300">
+    <div class="font-bold text-center mb-6 bg-white p-4 mb-4 border border-gray-300 lg:text-[30px] sm:text-[8px]">
       หน้าจัดการฐานข้อมูล
     </div>
     <div v-if="loading" class="text-center text-gray-600">
       กำลังโหลดข้อมูล...
     </div>
-    <div v-else class="p-6 bg-white text-black grid grid-cols-1 gap-6 border border-gray-300">
+    <div v-else class="p-6 bg-white text-black grid grid-cols-1 gap-6 border border-gray-300 ">
       <table-component
         :textHeader="textinstructor_sj"
         :headers="instructor_sjHeaders"

@@ -1,8 +1,8 @@
 // src/views/RoomManagement.vue
 <template>
   <div class="flex-1 p-6">
-    <div class="text-2xl font-bold text-center mb-6 bg-white p-4 mb-4 border border-gray-300">
-      หน้าจัดการฐานข้อมูล
+    <div class="font-bold text-center mb-6 bg-white p-4 mb-4 border border-gray-300 lg:text-[30px] sm:text-[8px]">
+      หน้าจัดการฐานข้อมูล ห้อง
     </div>
     <div v-if="loading" class="text-center text-gray-600">
       กำลังโหลดข้อมูล...
