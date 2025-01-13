@@ -1,34 +1,30 @@
 <!-- src/components/HeaderBar.vue -->
 <template>
-  <div class="fixed top-0 left-0 w-full h-30 bg-white shadow-md z-50">
+  <div class="fixed top-0 left-0 w-full h-20 bg-white shadow-md z-50">
     <div class="flex justify-between items-center px-6 h-full">
-      <!-- ส่วนอื่นๆ ของ HeaderBar -->
-      
-      
-        <!-- <div class="w-28 h-30">
-        <img src="@/assets/img/logo.jpg" class="w-full h-full">
-      </div> -->
       <div class="flex items-center">
-      <div  class="lg:w-28 h-24 ">
-    <img src="@/assets/img/logo.jpg" class="w-full h-full" />
-  </div>
-  <button 
-        @click="toggleMenu" 
-        class="px-4 py-2  rounded-md   text-3xl"
-      >
-      ≡
-      </button>
-  <!-- ปุ่มเมนู -->
-</div>
+        <div class="lg:w-20 h-20 sm:w-16 h-16">
+          <img src="@/assets/img/logo.jpg" alt="Logo" class="w-full h-full object-contain" />
+        </div>
+        <button 
+          @click="toggleMenu" 
+          class="px-4 py-2 text-3xl"
+          aria-label="Toggle Menu"
+        >
+          ≡
+        </button>
+      </div>
 
-      <!-- เมนู -->
-      <MenuBar v-if="isMenuVisible" @close="closeMenu"  class="fixed top-28 left-0 w-70 bg-white shadow-md h-[calc(100vh-4rem)] sm:w-70"/>
+      <MenuBar 
+        v-if="isMenuVisible" 
+        @close="closeMenu"  
+        class="fixed top-20 left-0 w-72 bg-white shadow-md h-[calc(100vh-5rem)] sm:w-72"
+      />
         
-        <!-- เพิ่มส่วนแสดงข้อมูล user -->
       <div class="flex items-center gap-4">
         <div class="text-gray-700">
           <span class="font-medium">ยินดีต้อนรับ: </span>
-          <span>{{ user ? user.username : 'Loading...' }}</span>
+          <span>{{ userData?.username || 'Loading...' }}</span>
         </div>
         
         <button
@@ -66,60 +62,75 @@
 </template>
 
 <script>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import MenuBar from '@/components/MenuBar.vue'
+
 export default {
   name: 'HeaderBar',
   components: {
     MenuBar,
   },
-  data() {
-    return {
-      showConfirmation: false,
-      isMenuVisible: false,
-      user: null
-    }
-  },
- created() {
-    const user = localStorage.getItem('admin-user');
-    if (user) {
-      this.user = JSON.parse(user);
-    }
- },
- setup() {
-    const route = useRoute() // เข้าถึงข้อมูลเส้นทางปัจจุบัน
-    const router = useRouter();
+  setup() {
+    const router = useRouter()
+    const route = useRoute()
+    
+    const showConfirmation = ref(false)
+    const isMenuVisible = ref(false)
+    const userData = ref(null)
 
-    router.afterEach(() => {
+    const handleResize = () => {
       if (window.innerWidth <= 768) {
-        this.isMenuVisible = false;
+        isMenuVisible.value = false
       }
-    });
-    return {
-      route, // ส่งต่อ route ไปใช้งานใน template
     }
-  },
-  methods: {
-    toggleMenu() {
-      this.isMenuVisible = !this.isMenuVisible
-    },
-    closeMenu() {
-      this.isMenuVisible = false
-    },
-    handleLogout() {
-      this.showConfirmation = true
-    },
-    confirmLogout() {
-      // ลบ token
+
+    onMounted(() => {
+      const userStr = localStorage.getItem('admin-user')
+      if (userStr) {
+        try {
+          userData.value = JSON.parse(userStr)
+        } catch (e) {
+          console.error('Error parsing user data:', e)
+        }
+      }
+
+      window.addEventListener('resize', handleResize)
+    })
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', handleResize)
+    })
+
+    const toggleMenu = () => {
+      isMenuVisible.value = !isMenuVisible.value
+    }
+
+    const closeMenu = () => {
+      isMenuVisible.value = false
+    }
+
+    const handleLogout = () => {
+      showConfirmation.value = true
+    }
+
+    const confirmLogout = () => {
       localStorage.removeItem('admin-token')
-      
-      // ปิด dialog
-      this.showConfirmation = false
-      
-      // redirect ไปหน้า login และรีเฟรชหน้า
-      this.$router.push('/login').then(() => {
+      showConfirmation.value = false
+      router.push('/login').then(() => {
         window.location.reload()
       })
+    }
+
+    return {
+      showConfirmation,
+      isMenuVisible,
+      userData,
+      route,
+      toggleMenu,
+      closeMenu,
+      handleLogout,
+      confirmLogout
     }
   }
 }
