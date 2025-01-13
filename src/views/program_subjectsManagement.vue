@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1 p-6">
     <div class="font-bold text-center mb-6 bg-white p-4 mb-4 border border-gray-300 lg:text-[30px] sm:text-[8px]">
-      หน้าจัดการฐานข้อมูล
+      หน้าจัดการฐานข้อมูลวิชาที่เปิดสอนในแต่ละหลักสูตร
     </div>
     <div v-if="loading" class="text-center text-gray-600">
       กำลังโหลดข้อมูล...
@@ -38,7 +38,7 @@ export default defineComponent({
   data() {
     return {
       textprogram_subjects: "ข้อมูลวิชาที่เปิดสอนในแต่ละหลักสูตร",
-      program_subjectsHeaders: ["ID", "ข้อมูลหลักสูตร", "ข้อมูลวิชา"],
+      program_subjectsHeaders: [ "ข้อมูลหลักสูตร", "ข้อมูลวิชา"],
       program_subjectsData: [],
       subjectsData: [],
       loading: false,
@@ -71,7 +71,7 @@ async fetchSubjects() {
       try {
         const { data } = await programSubjectAPI.getAll()
         this.program_subjectsData = data.map((item) => [
-          item.program_id,
+          // item.program_id,
           item.description,
           item.subject_id
         ])

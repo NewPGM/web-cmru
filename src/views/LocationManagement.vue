@@ -2,7 +2,7 @@
 <template>
   <div class="flex-1 p-6">
     <div class="font-bold text-center mb-6 bg-white p-4 mb-4 border border-gray-300 lg:text-[30px] sm:text-[8px]">
-      หน้าจัดการฐานข้อมูล
+      หน้าจัดการฐานข้อมูลที่อยู่
     </div>
     <div v-if="loading" class="text-center text-gray-600">
       กำลังโหลดข้อมูล...
@@ -35,7 +35,7 @@ export default {
 
   data() {
     return {  
-      textLocations: "ข้อมูลห้อง",
+      textLocations: "ข้อมูลที่อยู่",
       locationHeaders: ["ID", "ชื่อภาควิชา", "ชื่ออาคาร", "ที่อยู่"],
       LocationData: [],
       loading: false,
