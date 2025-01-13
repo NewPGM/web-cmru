@@ -38,7 +38,7 @@ export default defineComponent({
   data() {
     return {
       textprogram_subjects: "ข้อมูลวิชาที่เปิดสอนในแต่ละหลักสูตร",
-      program_subjectsHeaders: [ "ข้อมูลหลักสูตร", "ข้อมูลวิชา"],
+      program_subjectsHeaders: ["ID","ข้อมูลหลักสูตร", "ข้อมูลวิชา"],
       program_subjectsData: [],
       subjectsData: [],
       loading: false,
@@ -71,7 +71,7 @@ async fetchSubjects() {
       try {
         const { data } = await programSubjectAPI.getAll()
         this.program_subjectsData = data.map((item) => [
-          // item.program_id,
+          item.program_id,
           item.description,
           item.subject_id
         ])
