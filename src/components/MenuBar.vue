@@ -72,7 +72,7 @@
     </router-link>
   </div>
   <div class="flex items-center menu-item text-[#3260a5]" :class="{ active: $route.path === '/admin' }">
-    <font-awesome-icon icon="question-circle" />
+    <font-awesome-icon icon="user-shield" />
     <router-link
       to="/admin"
       class="m-2"
