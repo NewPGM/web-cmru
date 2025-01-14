@@ -88,8 +88,8 @@
           </template>
         </div>
         <div class="flex justify-center mt-4 w-full">
-        <button class="bg-[#3260a5] w-full "  @click="addRow">เพิ่ม</button>
-        <button class="bg-[#3260a5] w-full" @click="closeAddDialog">ยกเลิก</button>
+        <button class="bg-[#3260a5] w-full hover:bg-blue-700 "  @click="addRow">เพิ่ม</button>
+        <button class="bg-[#3260a5] w-full hover:bg-blue-700" @click="closeAddDialog">ยกเลิก</button>
       </div>
       </div>
     </div>
@@ -121,12 +121,31 @@
           </template>
         </div>
         <div class="flex justify-center mt-4 w-full">
-        <button class="bg-[#3260a5] mt-4 w-full" @click="saveRow">บันทึก</button>
-        <button class="bg-[#3260a5] mt-4 w-full" @click="closeEditDialog">ยกเลิก</button>
+        <button class="bg-[#3260a5] mt-4 w-full hover:bg-blue-700" @click="saveRow">บันทึก</button>
+        <button class="bg-[#3260a5] mt-4 w-full hover:bg-blue-700" @click="closeEditDialog">ยกเลิก</button>
       </div>
       </div>
     </div>
     </div>
+    <!-- Delete Confirmation Dialog -->
+<div v-if="showDeleteDialog" class="modal-overlay">
+  <div class="modal-content">
+    <div class="bg-red-500 p-4 border border-red-500 rounded-t-md">
+      <p class="text-2xl text-white">ยืนยันการลบ</p>
+    </div>
+    <div class="m-4">
+      <p>คุณต้องการลบข้อมูลนี้หรือไม่?</p>
+      <div class="flex justify-center mt-4 space-x-4">
+        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:bg-red-700" @click="confirmDelete">
+          ยืนยัน
+        </button>
+        <button class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" @click="cancelDelete">
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 
@@ -169,7 +188,9 @@ export default {
       errorMessage: "",
       showAddDialog: false,
       showEditDialog: false,
-      indexs: 1
+      indexs: 1,
+      showDeleteDialog: false,
+      deleteRowIndex: null,
     };
   },
 
@@ -262,9 +283,23 @@ export default {
     },
 
     deleteRow(index) {
-      const id = this.internalData[index][0];
-      this.$emit("delete", id);
+      // const id = this.internalData[index][0];
+      this.deleteRowIndex = index;
+      this.showDeleteDialog = true;
     },
+
+    confirmDelete() {
+    const id = this.internalData[this.deleteRowIndex][0];
+    this.$emit("delete", id);
+    this.internalData.splice(this.deleteRowIndex, 1); // ลบแถวจาก internalData
+    this.showDeleteDialog = false; // ปิดไดอะล็อก
+    this.deleteRowIndex = null; // รีเซ็ต index ที่ต้องการลบ
+  },
+
+  cancelDelete() {
+    this.showDeleteDialog = false; // ปิดไดอะล็อก
+    this.deleteRowIndex = null; // รีเซ็ต index ที่ต้องการลบ
+  },
 
     cancelAddRow() {
       this.showAddForm = false;
@@ -337,9 +372,9 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+/* button:hover {
   background-color: #1976d2;
-}
+} */
 
 .add-button {
   margin-top: 1rem;
