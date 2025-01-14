@@ -136,10 +136,10 @@
     <div class="m-4">
       <p>คุณต้องการลบข้อมูลนี้หรือไม่?</p>
       <div class="flex justify-center mt-4 space-x-4">
-        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:bg-red-700" @click="confirmDelete">
+        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:bg-red-700 w-full" @click="confirmDelete">
           ยืนยัน
         </button>
-        <button class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" @click="cancelDelete">
+        <button class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 w-full" @click="cancelDelete">
           ยกเลิก
         </button>
       </div>
