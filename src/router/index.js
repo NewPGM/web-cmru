@@ -11,6 +11,7 @@ import training_phrasesManagement from '@/views/training_phrasesManagement.vue'
 import AdminLogin from '@/views/Admin.vue'
 // import Admin_main from '@/views/app.vue'
 import adminManagement from '@/views/AdminManagement.vue'
+import subjectsManagement from '@/views/subjectsManagement.vue'
 
 
 
@@ -91,6 +92,12 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: adminManagement,
+      meta: { requiresAuth: true }, // ต้องล็อกอิน
+    },
+    {
+      path: '/subjects',
+      name: 'subjects',
+      component: subjectsManagement,
       meta: { requiresAuth: true }, // ต้องล็อกอิน
     }
   ]

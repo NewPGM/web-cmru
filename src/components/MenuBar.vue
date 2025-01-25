@@ -45,6 +45,15 @@
     </div>
     <div
       class="flex items-center menu-item text-[#3260a5]"
+      :class="{ active: $route.path === '/subjects' }"
+    >
+      <font-awesome-icon icon="graduation-cap" />
+      <router-link to="/subjects" class="m-2">
+        จัดการข้อมูลวิชา
+      </router-link>
+    </div>
+    <div
+      class="flex items-center menu-item text-[#3260a5]"
       :class="{ active: $route.path === '/instructor_sj' }"
     >
       <font-awesome-icon icon="chalkboard-teacher" />
