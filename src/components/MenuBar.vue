@@ -47,7 +47,7 @@
       class="flex items-center menu-item text-[#3260a5]"
       :class="{ active: $route.path === '/subjects' }"
     >
-      <font-awesome-icon icon="graduation-cap" />
+      <font-awesome-icon icon="laptop-code" />
       <router-link to="/subjects" class="m-2">
         จัดการข้อมูลวิชา
       </router-link>
