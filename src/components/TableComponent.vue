@@ -23,7 +23,7 @@
               <th v-for="header in headers" :key="header" class="px-4 py-2 text-left">
                 {{ header }}
               </th>
-              <th class="px-4 py-2 text-left">Actions</th>
+              <th class="px-4 py-2 text-left w-32 ">Actions</th>
             </tr>
           </thead>
 
