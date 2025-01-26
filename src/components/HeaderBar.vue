@@ -18,7 +18,7 @@
       <MenuBar 
         v-if="isMenuVisible" 
         @close="closeMenu"  
-        class="fixed top-20 left-0 w-72 bg-white shadow-md h-[calc(100vh-5rem)] sm:w-72"
+        class="fixed top-28 left-0 w-72 bg-white shadow-md h-[calc(100vh-5rem)] sm:w-72"
       />
         
       <div class="flex items-center gap-4">
