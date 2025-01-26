@@ -22,15 +22,25 @@
       />
         
       <div class="flex items-center gap-4">
-        <div class="text-gray-700">
-          <span class="font-medium">ยินดีต้อนรับ: </span>
-          <span>{{ userData?.username || 'Loading...' }}</span>
-        </div>
+        <div class="flex items-center gap-4 p-2 bg-blue-50 rounded-md shadow-md">
+  <div class="flex items-center gap-2 text-blue-600">
+    <!-- ไอคอนผู้ใช้งาน -->
+    <font-awesome-icon icon="user-circle" class="text-2xl" />
+    <!-- ข้อความต้อนรับ -->
+    <div>
+      <span class="font-semibold text-gray-700">ยินดีต้อนรับ : </span>
+      <span class="text-gray-800">{{ userData?.username || 'Loading...' }}</span>
+    </div>
+  </div>
+</div>
+
+        
         
         <button
           @click="handleLogout"
-          class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+          class="px-4 py-2 bg-red-500 hover:bg-red-600 text-sm rounded-md transition-all duration-300 text-white"
         >
+          <font-awesome-icon icon="sign-out-alt" class="mr-2 text-white" />
           Logout
         </button>
       </div>
@@ -42,16 +52,16 @@
       <div class="bg-white p-6 rounded-lg shadow-xl">
         <h3 class="text-lg font-medium mb-4">ยืนยันการออกจากระบบ</h3>
         <p class="mb-4">คุณต้องการออกจากระบบใช่หรือไม่?</p>
-        <div class="flex justify-end gap-4">
+        <div class="flex justify-center gap-4">
           <button 
             @click="showConfirmation = false"
-            class="px-4 py-2 text-gray-600 hover:text-gray-800"
+            class="px-4 py-2 text-gray-600 hover:text-gray-800 bg-gray-200 rounded-md w-full"
           >
             ยกเลิก
           </button>
           <button 
             @click="confirmLogout"
-            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 w-full"
           >
             ยืนยัน
           </button>
