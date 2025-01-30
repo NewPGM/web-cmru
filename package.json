@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "vue-cli-service serve",
-  "build": "vue-cli-service build",
-  "lint": "vue-cli-service lint"
-},
-
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
@@ -22,7 +21,8 @@
     "mysql2": "^3.11.3",
     "vue": "^3.2.13",
     "vue-router": "^4.4.5",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
