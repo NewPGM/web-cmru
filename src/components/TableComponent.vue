@@ -295,10 +295,8 @@ export default {
     },
 
     getDisplayName(header, value) {
-      
-      if (header === "password") {
-        return "******";
-      } 
+     
+      if (header === "password") return "********";
       if (!value) return "ไม่ระบุ";
       const options = this.getOptionsForField(header);
       const option = options.find((opt) => opt.id === parseInt(value));
