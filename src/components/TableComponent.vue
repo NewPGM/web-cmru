@@ -110,6 +110,16 @@
               :placeholder="'กรอก ' + header"
             />
           </template>
+
+          <!-- <template v-if="header === 'password'">
+    <textarea
+      class="border border-gray-300 mt-1 p-2 rounded"
+      v-model="newRow[index]"
+      :placeholder="'กรอก ' + header"
+      type="password"
+    />
+  </template> -->
+ 
         </div>
         <div class="flex justify-center mt-4 w-full">
           <button class="bg-[#3260a5] w-full hover:bg-blue-700" @click="addRow">
@@ -160,6 +170,8 @@
               :placeholder="'แก้ไข ' + header"
             />
           </template>
+
+    
         </div>
         <div class="flex justify-center mt-4 w-full">
           <button
@@ -243,6 +255,7 @@ export default {
       showAddForm: false,
       newRow: Array(this.headers.length - 1).fill(""),
       errorMessage: "",
+      
       showAddDialog: false,
       showEditDialog: false,
       indexs: 1,
@@ -347,6 +360,8 @@ export default {
         }),
       ]);
 
+      const passwordSchema = z.string().min(6, "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัว");
+
 
       const validationResults = [];
 
@@ -361,6 +376,8 @@ export default {
           result = phoneSchema.safeParse(field);
         } else if (header === "ห้องพัก") {
           result = roomSchema.safeParse(field);
+        } else if (header === "password") {
+          result = passwordSchema.safeParse(field);
         } else {
           result = requiredField.safeParse(field);
         }
@@ -372,6 +389,8 @@ export default {
           });
         }
       });
+
+
 
       if (validationResults.length > 0) {
         // แสดงข้อความผิดพลาด
@@ -400,7 +419,7 @@ export default {
       const emailSchema = z
         .string()
         .min(1, "กรุณากรอกอีเมล")
-        .email("กรุณากรอกอีเมลให้ถูกต้อง")
+        .email("กรุณากรอกอีเมลให้ถูกต้อง A-Z, a-z, 0-9, ., _, - @ เท่านั้น")
         .refine((email) => email.includes("@"), {
           message: "กรุณากรอกอีเมลที่มีเครื่องหมาย @",
         })
@@ -426,7 +445,10 @@ export default {
         }),
       ]);
 
-      const urlSchema = z.string("กรุณากรอก Url ให้ถูกต้อง");
+      const passwordSchema = z.string().min(6, "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัว");
+      const usernameSchema = z.string().min(2, "กรุณากรอก Username อย่างน้อย 2 ตัว");
+
+      
 
       const idSchema = z
         .union([z.string(), z.number()])
@@ -437,9 +459,13 @@ export default {
       const validationResults = [];
 
 
-      this.editRow.forEach((field, index) => {
-        const header = this.headers[index + 1]; 
 
+      if (this.headers === "ชื่ออาจารย์") {
+        this.editRow.forEach((field, index) => {
+        const header = this.headers[index + 1]; 
+        console.log(field);
+        
+        
 
         if (header === "ID") {
           let result = idSchema.safeParse(field);
@@ -475,9 +501,21 @@ export default {
           result = phoneSchema.safeParse(field);
         }
 
-        if (header === "Url") {
-          result = urlSchema.safeParse(field);
-        } else {
+        
+
+        if (header === "Username") {
+          result = usernameSchema.safeParse(field);
+          console.log("Username", field);
+          
+        }
+
+        if (header === "password") {
+          result = passwordSchema.safeParse(field);
+          console.log("password", field);
+          
+        }
+
+       else {
           result = requiredField.safeParse(field);
         }
 
@@ -488,6 +526,59 @@ export default {
           });
         }
       });
+      }
+
+      if (this.headers === "password") {
+        this.editRow.forEach((field, index) => {
+        const header = this.headers[index + 1]; 
+        console.log(field);
+        
+        
+
+        if (header === "ID") {
+          let result = idSchema.safeParse(field);
+          if (!result.success) {
+            validationResults.push({
+              header,
+              message: result.error.errors[0].message,
+            });
+          }
+          return;
+        }
+
+
+        if (typeof field === "number") {
+          field = field.toString();
+        }
+
+        let result;
+        
+
+        if (header === "Username") {
+          result = usernameSchema.safeParse(field);
+          console.log("Username", field);
+          
+        }
+
+        if (header === "password") {
+          result = passwordSchema.safeParse(field);
+          console.log("password", field);
+          
+        }
+
+       else {
+          result = requiredField.safeParse(field);
+        }
+
+        if (!result.success) {
+          validationResults.push({
+            header,
+            message: result.error.errors[0].message,
+          });
+        }
+      });
+      }
+      
 
       if (validationResults.length > 0) {
         // แสดงข้อความผิดพลาด

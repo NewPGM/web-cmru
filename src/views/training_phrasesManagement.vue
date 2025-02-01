@@ -7,6 +7,19 @@
       กำลังโหลดข้อมูล...
     </div>
     <div v-else class="p-6 bg-white text-black grid grid-cols-1 gap-6 border border-gray-300">
+      <div>
+      <p class="text-2xl">เลือกค้นหา หมวดหมู่</p>
+      <select v-model="selectedIntent">
+  <option value="all">ทั้งหมด</option>
+  <option v-for="option in intentsData" :key="option.intent_id" :value="option.intent_id">
+    {{ option.description }}
+    {{ console.log("option.id",option.intent_id)
+     }}
+  </option>
+</select>
+</div>
+
+
       <table-component
         :textHeader="textTrainingPhrases"
         :headers="trainingPhrasesHeaders"
@@ -40,6 +53,8 @@ export default defineComponent({
       textTrainingPhrases: "จัดการข้อมูล Training Phrases",
       trainingPhrasesHeaders: ["ID", "Intent (หมวดหมู่)", "Phrase (คำถาม)"],
       trainingPhrasesData: [],
+      trainingPhrasesAllData: [],
+      selectedIntent: "all", // ตั้งค่าเริ่มต้นให้เป็น "all"
       intentsData: [],
       loading: false,
       error: null,
@@ -51,23 +66,42 @@ export default defineComponent({
     await this.fetchIntentsData();
   },
 
+  watch: {
+  selectedIntent() {
+    this.filterTrainingPhrases();
+  }
+},
+
+
   methods: {
     async fetchTrainingPhrasesData() {
       this.loading = true;
       this.error = null;
       try {
         const { data } = await trainingPhraseAPI.getAll();
-        this.trainingPhrasesData = data.map((item) => [
+        this.trainingPhrasesAllData = data.map((item) => [
           item.phrase_id,
           item.intent_id,
           item.phrase,
         ]);
+        this.filterTrainingPhrases();
       } catch (error) {
         console.error("เกิดข้อผิดพลาดในการดึงข้อมูล Training Phrases:", error);
         this.error = "ไม่สามารถดึงข้อมูล Training Phrases ได้";
       } finally {
         this.loading = false;
       }
+    },
+
+    filterTrainingPhrases() {
+      if (!this.trainingPhrasesAllData) return;
+      
+      this.trainingPhrasesData = this.trainingPhrasesAllData.filter(
+        (item) => item[1] === this.selectedIntent || this.selectedIntent === "all"
+      );
+console.log("Training Phrases ทั้งหมด:", this.trainingPhrasesAllData);
+
+      console.log("Training Phrases ที่แสดง:", this.trainingPhrasesData);
     },
 
     async fetchIntentsData() {
@@ -150,4 +184,13 @@ export default defineComponent({
 .colorBG {
   background-color: #f4f6ff;
 }
+
+select {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
 </style>

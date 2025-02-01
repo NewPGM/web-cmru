@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       textcourses: "ข้อมูล Admin",
-      adminHeaders: ["ID", "Username", "password", "email"],
+      adminHeaders: ["ID", "Username", "password", "Email"],
       adminData: [],
       loading: false,
       error: null,
