@@ -360,6 +360,15 @@ export default {
         }),
       ]);
 
+      const intentSchema = z.union([
+        z.string().refine((value) => value.trim().length > 0, {
+          message: "กรุณาเลือกหมวดหมู่",
+        }),
+        z.number().refine((value) => value.toString().trim().length > 0, {
+          message: "กรุณาเลือกหมวดหมู่",
+        }),
+      ]);
+
       const passwordSchema = z.string().min(6, "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัว");
 
 
@@ -378,6 +387,8 @@ export default {
           result = roomSchema.safeParse(field);
         } else if (header === "password") {
           result = passwordSchema.safeParse(field);
+        } else if (header === "Intent (หมวดหมู่)") {
+          result = intentSchema.safeParse(field);
         } else {
           result = requiredField.safeParse(field);
         }
@@ -394,6 +405,8 @@ export default {
 
       if (validationResults.length > 0) {
         // แสดงข้อความผิดพลาด
+        console.log("validationResults", validationResults);
+        
         alert(
           validationResults
             .map((err) => `${err.header}: ${err.message}`)
