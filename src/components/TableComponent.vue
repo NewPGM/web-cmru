@@ -369,6 +369,24 @@ export default {
         }),
       ]);
 
+      const subjectSchema = z.union([
+        z.string().refine((value) => value.trim().length > 0, {
+          message: "กรุณาเลือกวิชา",
+        }),
+        z.number().refine((value) => value.toString().trim().length > 0, {
+          message: "กรุณาเลือกวิชา",
+        }),
+      ]);
+
+      const teacherSchema = z.union([
+        z.string().refine((value) => value.trim().length > 0, {
+          message: "กรุณาเลือกอาจารย์",
+        }),
+        z.number().refine((value) => value.toString().trim().length > 0, {
+          message: "กรุณาเลือกอาจารย์",
+        }),
+      ]);
+
       const passwordSchema = z.string().min(6, "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัว");
 
 
@@ -389,6 +407,12 @@ export default {
           result = passwordSchema.safeParse(field);
         } else if (header === "Intent (หมวดหมู่)") {
           result = intentSchema.safeParse(field);
+        }
+        else if (header === "ข้อมูลวิชา") {
+          result = subjectSchema.safeParse(field);
+        }
+        else if (header === "ข้อมูลอาจารย์") {
+          result = teacherSchema.safeParse(field);
         } else {
           result = requiredField.safeParse(field);
         }
